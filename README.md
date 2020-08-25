@@ -1,7 +1,7 @@
 iKala CDP API
 ===
 
-API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
+API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation/
 
 ## 流程簡介
 user_profiles 與 tagging 上傳流程簡介：一開始需要先用 Create application token 來建立一個「CSV上傳任務」的概念，建立 ingestion 後會取得 put_url，將 CSV 檔案透過 put 的方式上傳到該 put_url，上傳完成後再呼叫  Notify that data is ready for process 通知伺服器將 CSV 檔案的內容傳入 CDP，最後可以透過 Get details of data ingestion 來了解 CSV 傳入 CDP 的進度，當 status 為 `succeeded` 時，代表整個上傳作業完成。
