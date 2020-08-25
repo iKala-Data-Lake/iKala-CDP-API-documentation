@@ -61,6 +61,6 @@ API url：https://api.ikala-c4m.io
 |region|居住的地區|String|
 |city|居住的城市|String|
 |first_purchase_timestamp|第一次溝買的時間戳記|Timestamp(RFC3339)|
-|job_industry|產業別(techolongy etc)|String|
+|job_industry|產業別(technology etc)|String|
 |job_title|職稱(teacher etc)|String|
 |register_medium|註冊媒介，例如：(facebook, brick-and-mortar etc) |String|
