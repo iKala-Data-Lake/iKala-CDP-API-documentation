@@ -1,0 +1,165 @@
+openapi: 3.0.1
+info:
+  title: iKala CDP API
+  version: 1.0.0
+servers:
+  - url: "https://api.ikala-c4m.io"
+    description: prodcution
+
+tags:
+  - name : App
+    description: Before using any App APIs, you have to create a server application in CDP for obtaining client_id and client_secret which are used to get an application token.
+paths:
+  "/v1/app/token":
+    post:
+      tags:
+        - App
+      summary: create application token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  example: "94ea3a58d6ad0332"
+                client_secret:
+                  type: string
+                  example: "MKuFS-9fFCqtWJFG"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOjE2LCJpa2FfaWQiOiJJS0EtODkwMDc5LTEiLCJleHAiOjE1OTU5OTMzOTJ9.yV-xE1xtr59SKB-CQjFCbOhCVrKWAGgYsjGOZGUy7pE"
+        "401":
+           $ref: "#/components/responses/401"
+        "404":
+           $ref: "#/components/responses/404"
+
+  "/v1/app/user_data/ingestions":
+    post:
+      tags:
+        - App
+      summary: create data ingestion
+      parameters:
+        - $ref: "#/components/parameters/headerAuthAppToken"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: "#/components/schemas/DataIngestionType"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataIngestionModel"
+        "400":
+           $ref: "#/components/responses/400"
+
+  "/v1/app/user_data/ingestions/{id}/data_ready":
+    post:
+      tags:
+        - App
+      summary: notify that data is ready for process
+      parameters:
+        - $ref: "#/components/parameters/headerAuthAppToken"
+        - $ref: "#/components/parameters/pathIngestionId"
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+  "/v1/app/user_data/ingestions/{id}":
+    get:
+      tags:
+        - App
+      summary: get details of data ingestion
+      parameters:
+        - $ref: "#/components/parameters/headerAuthAppToken"
+        - $ref: "#/components/parameters/pathIngestionId"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataIngestionModel"
+        "400":
+           $ref: "#/components/responses/400"
+
+components:
+  parameters:
+    pathIngestionId:
+      description: "id of data ingestion"
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    headerAuthAppToken:
+      name: Authorization
+      in: header
+      required: true
+      description: "Application token"
+      schema:
+        type: string
+        example: Bearer ${App Token}
+  responses:
+    200:
+      description: "OK"
+    204:
+      description: "No Content"
+    400:
+      description: "Bad Request"
+    401:
+      description: "Unauthorized"
+    403:
+      description: "Forbidden"
+    404:
+      description: "Not Found"
+    409:
+      description: "Conflict"
+  schemas:
+    DataIngestionType:
+      type: string
+      enum: ["user_profiles", "tagging"]
+      example: "user_profiles"
+      description: type of ingestion
+    DataIngestionModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          $ref: "#/components/schemas/DataIngestionType"
+        status:
+          type: string
+          enum: ["created", "uploaded", "validating", "validated", "processing", "succeeded", "failed"]
+          example: "created"
+        error_code:
+          type: integer
+          example: 0
+          description: |
+            1000: data format error \
+            1001: too many records \
+            please refer to error_message for more details
+        error_message:
+          type: string
+          example: ""
+        put_url:
+          type: string
+          example: "https://storage.googleapis.com/ika-01234-customer-data/user-data-ingestion/14.csv?Expires=1595870063&GoogleAccessId=ikala-dl-api%40c4m.iam.gserviceaccount.com&Signature=OfkRjv%2F1z28dgHXF%2FQ8f0D8ky%2Bso3h6A2Ow0q%2FrTc%2FK9mVhcBdeDdwZZjPjsSwS7JQ4XMNFfrAeQaqgkFSScW6omL0%2FFLcPU9iJdnpqqrRp5aJhiRvl9Jn7LYhL7A%2B8f0dVG6ge2OWAZyq7tgRUAFP%2Bya9wZuJ%2BvEAGP6XRA2uem7ULAfbITlM67a8NsYmYcYTLyvkKfxlvBgIdpIlrYBAIIr4vkp6B%2F1JQXJElgSlkzVQNmc3JGNKQ1xM8v%2FamD8qzeEj2l9vSBUvIuQyxHvMOs3%2BvXz%2FpDymjhfjkcOA2NiPjUq1JeGgH7FGxcAOk7tH2dZ5HEA95Ol8hMBX7ppQ%3D%3D"
+        put_url_expired_at:
+          type: string
+          example: "2020-07-27T17:14:23.645283912Z"
