@@ -33,7 +33,7 @@ API url：https://api.ikala-c4m.io
 
 |Name|Description|Type|
 |-|-|-|
-|user_id*|primary key，這跟要跟GA的user_id一樣|UUID|
+|user_id*|primary key，需要與 GA 埋入的 user_id 一樣|unique-ID|
 |tag_name*| 標籤名稱, ex: 3c | STRING (URF-8 encoding), ^[0-9a-z\-_]+$|
 
 ### User profiles CSV field
@@ -44,9 +44,9 @@ API url：https://api.ikala-c4m.io
 
 |Name|Description|Type|
 |-|-|-|
-|user_id*|primary key，這跟要跟GA的user_id一樣|UUID|
+|user_id*|primary key，需要與 GA 埋入的 user_id 一樣|unique-ID|
 |email*|電子郵件|String|
-|phone_number*|電話號碼 (0912-345-678 或 0912345678)|String|
+|phone_number*|電話號碼 (+886912345678)|String ([E.164](https://en.wikipedia.org/wiki/E.164), 國碼加上電話號碼)|
 |gender|- 保留 (rather_not_say)<br> - 男 (male)<br> - 女 (female) |String|
 |status| 帳號狀態<br> - 未驗證 (pending_activation)<br> - 註冊 (active)<br> - 註銷 (deleted)<br> - 鎖定中 (disabled) |String|
 |register_timestamp|註冊時間|Timestamp(RFC3339)|
