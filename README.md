@@ -4,16 +4,13 @@ iKala CDP API
 API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation/
 
 ## 流程簡介
-user_profiles 與 tagging 上傳流程簡介：一開始需要先用 Create application token 來建立一個「CSV上傳任務」的概念，建立 ingestion 後會取得 put_url，將 CSV 檔案透過 put 的方式上傳到該 put_url，上傳完成後再呼叫  Notify that data is ready for process 通知伺服器將 CSV 檔案的內容傳入 CDP，最後可以透過 Get details of data ingestion 來了解 CSV 傳入 CDP 的進度，當 status 為 `succeeded` 時，代表整個上傳作業完成。
+**user_profiles 與 tagging 上傳流程簡介**：一開始需要先用 Create application token API 取得 token，才可以用這個token來操作其他 API，接著用 Create data ingestion API 建立一個「CSV上傳任務」，API的body有一個參數 type，要填`user_profiles`或`tagging`來決定要上傳的資料類型，建立 ingestion 後會取得 put_url，將 CSV 檔案透過 put 的方式上傳到該 put_url，當上傳完成後再呼叫  Notify that data is ready for process API 通知伺服器將 CSV 檔案的內容寫入 CDP，最後透過 Get details of data ingestion API 了解 CSV 寫入 CDP 的進度，當 status 為 `succeeded` 時，代表整個上傳作業完成。
 
 ## API 列表
-
-API url：https://api.ikala-c4m.io
-
 |API|URL|Description|
 |-|-|-|
 | Create application token| POST `/v1/app/token`| 使用 client_id 與 client_secret 取得 token，夾帶在其他 API 的 header 中來通過認證|
-| Create data ingestion| POST `/v1/app/user_data/ingestions` |建立一個上傳任務，接著您必須自行完成上傳 CSV 的步驟，將檔案上傳到 `pur_url`|
+| Create data ingestion| POST `/v1/app/user_data/ingestions` |建立一個上傳任務，API的body有一個參數 type ，要填`user_profiles`或`tagging`來決定要上傳的資料類型，接著您必須自行完成上傳 CSV 的步驟，將檔案上傳到 `pur_url`|
 | Notify that data is ready for process| POST `/v1/app/user_data/ingestions/{id}/data_ready`| 當 CSV 上傳完成後，使用此API主動通知伺服器將 CSV 檔案內容傳入 CDP|
 | Get details of data ingestion|GET `/v1/app/user_data/ingestions/{id}`| Ingestion 目前狀態與 meta data，status 值包含 `created`, `uploaded`, `validating`, `validated`, `processing`, `succeeded`, `failed`|
 
