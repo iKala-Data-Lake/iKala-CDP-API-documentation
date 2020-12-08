@@ -132,7 +132,7 @@ components:
   schemas:
     DataIngestionType:
       type: string
-      enum: ["user_profiles", "tagging"]
+      enum: ["user_profiles", "tagging", "orders"]
       example: "user_profiles"
       description: type of ingestion
     DataIngestionModel:
