@@ -71,7 +71,7 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |order_id*|primary key|UniqueID|MUST be UTF-8 encoded|
 |user_id*||UniqueID|MUST be UTF-8 encoded|
 |create_timestamp|訂單建立時的時間戳記|Timestamp|https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#timestamp_type|
-|status|列舉 <br> - 訂單成立 <br> - 請款 <br> - 扣款 <br> - 付清 <br> - 部分換 <br> - 換貨 <br> - 部分退貨 <br> - 部分退貨 <br> - 訂單取消|String|MUST be UTF-8 encoded|
+|status|列舉 <br> - 訂單成立 <br> - 請款 <br> - 扣款 <br> - 付清 <br> - 部分換貨 <br> - 換貨 <br> - 部分退貨 <br> - 部分退貨 <br> - 訂單取消|String|MUST be UTF-8 encoded|
 |order_amount|消費金額|Float||
 |goods_discount_price|單獨用在商品上的折購金額總和|Float||
 |order_discount_price|單獨用在訂單上的折購金額總和。從 OrdersCoupons 進行計算|Float||
