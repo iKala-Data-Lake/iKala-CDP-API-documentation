@@ -4,7 +4,7 @@ iKala CDP API
 API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation/
 
 ## 流程簡介
-**user_profiles 與 tagging 上傳流程簡介**：一開始需要先用 Create application token API 取得 token，才可以用這個token來操作其他 API，接著用 Create data ingestion API 建立一個「CSV上傳任務」，API的body有一個參數 type，要填`user_profiles`或`tagging`來決定要上傳的資料類型，建立 ingestion 後會取得 put_url，將 CSV 檔案透過 put 的方式上傳到該 put_url，當上傳完成後再呼叫  Notify that data is ready for process API 通知伺服器將 CSV 檔案的內容寫入 CDP，最後透過 Get details of data ingestion API 了解 CSV 寫入 CDP 的進度，當 status 為 `succeeded` 時，代表整個上傳作業完成。
+**user_profiles 與 tagging 上傳流程簡介**：一開始需要先用 Create application token API 取得 token，才可以用這個token來操作其他 API，接著用 Create data ingestion API 建立一個「CSV上傳任務」，API的body有一個參數 type，要填 `user_profiles` 或 `tagging`或 `orders` 來決定要上傳的資料類型，建立 ingestion 後會取得 put_url，將 CSV 檔案透過 put 的方式上傳到該 put_url，當上傳完成後再呼叫  Notify that data is ready for process API 通知伺服器將 CSV 檔案的內容寫入 CDP，最後透過 Get details of data ingestion API 了解 CSV 寫入 CDP 的進度，當 status 為 `succeeded` 時，代表整個上傳作業完成。
 
 ## API 列表
 |API|URL|Description|
@@ -61,3 +61,21 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |job_industry|產業別(technology etc)|String|
 |job_title|職稱(teacher etc)|String|
 |register_medium|註冊媒介，例如：(facebook, brick-and-mortar etc) |String|
+
+### Order CSV field
+
+\* means required field
+
+|Name|Description|Type|Value Definition|
+|-|-|-|-|
+|order_id*|primary key|UniqueID|MUST be UTF-8 encoded|
+|user_id*||UniqueID|MUST be UTF-8 encoded|
+|create_timestamp|訂單建立時的時間戳記|Timestamp|https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#timestamp_type|
+|status|列舉 <br> - 訂單成立 <br> - 請款 <br> - 扣款 <br> - 付清 <br> - 部分換 <br> - 換貨 <br> - 部分退貨 <br> - 部分退貨 <br> - 訂單取消|String|MUST be UTF-8 encoded|
+|order_amount|消費金額|Float||
+|goods_discount_price|單獨用在商品上的折購金額總和|Float||
+|order_discount_price|單獨用在訂單上的折購金額總和。從 OrdersCoupons 進行計算|Float||
+|payment_amount|結帳金額|Float||
+|currency|假如非跨國企業，則用當地貨幣當預設|String|https://zh.wikipedia.org/wiki/ISO_4217|
+|installment|分幾期。不分期即是 0|Integer||
+|is_online|是否是線上訂單|Boolean||
