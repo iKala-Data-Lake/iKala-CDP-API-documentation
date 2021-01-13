@@ -24,6 +24,8 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 
 ### Tagging CSV field
 
+**⚠注意：第一列的欄位名稱，每一欄都不能省略，且欄位順序不能調換，但是在第二列以後的資料欄位，如果該資料沒該欄位，則該欄位留空**
+
 [check tagging CSV template](./tagging_CSV_template.csv)
 
 \* means required field
@@ -34,6 +36,8 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |tag_name*| 標籤名稱, ex: 3c | STRING (URF-8 encoding), ^[0-9a-z\-_]+$|
 
 ### User profiles CSV field
+
+**⚠注意：第一列的欄位名稱，每一欄都不能省略，且欄位順序不能調換，但是在第二列以後的資料欄位，如果該資料沒該欄位，則該欄位留空**
 
 [check user profiles CSV template](./user_profiles_CSV_template.csv)
 
@@ -63,6 +67,8 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |register_medium|註冊媒介，例如：(facebook, brick-and-mortar etc) |String|
 
 ### Order CSV field
+
+**⚠注意：第一列的欄位名稱，每一欄都不能省略，且欄位順序不能調換，但是在第二列以後的資料欄位，如果該資料沒該欄位，則該欄位留空**
 
 \* means required field
 
