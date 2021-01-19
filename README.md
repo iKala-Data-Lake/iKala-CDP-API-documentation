@@ -48,8 +48,8 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |user_id*|primary key，需要與 GA 埋入的 user_id 一樣|unique-ID|
 |email*|電子郵件|String|
 |phone_number*|電話號碼 (+886912345678)|String ([E.164](https://en.wikipedia.org/wiki/E.164), 國碼加上電話號碼)|
-|gender|- 保留 (rather_not_say)<br> - 男 (male)<br> - 女 (female) |String|
-|status| 帳號狀態<br> - 未驗證 (pending_activation)<br> - 註冊 (active)<br> - 註銷 (deleted)<br> - 鎖定中 (disabled) |String|
+|gender| 性別<br> - 保留 (rather_not_say)<br> - 男 (male)<br> - 女 (female) |String { rather_not_say \| male \| female }|
+|status| 帳號狀態<br> - 未驗證 (pending_activation)<br> - 註冊 (active)<br> - 註銷 (deleted)<br> - 鎖定中 (disabled) |String { pending_activation \| active \| deleted \| disabled }|
 |register_timestamp|註冊時間|Timestamp(RFC3339)|
 |birthday|YYYY-mm-dd|Date|
 |is_dm|是否接收型錄|Boolean|
@@ -77,7 +77,7 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |order_id*|primary key|UniqueID|MUST be UTF-8 encoded|
 |user_id*||UniqueID|MUST be UTF-8 encoded|
 |create_timestamp|訂單建立時的時間戳記|Timestamp|https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#timestamp_type|
-|status|列舉 <br> - 訂單成立 <br> - 請款 <br> - 扣款 <br> - 付清 <br> - 部分換貨 <br> - 換貨 <br> - 部分退貨 <br> - 部分退貨 <br> - 訂單取消|String|MUST be UTF-8 encoded|
+|status|訂單狀態 <br> - 訂單成立 <br> - 請款 <br> - 扣款 <br> - 付清 <br> - 部分換貨 <br> - 換貨 <br> - 部分退貨 <br> - 部分退貨 <br> - 訂單取消|String|MUST be UTF-8 encoded { 訂單成立 \| 請款 \| 扣款 \| 付清 \|  部分換貨 \|  換貨 \|  部分退貨 \|  部分退貨 \|  訂單取消 } <br>**⚠注意：下一個版本開始會換成英文字串**|
 |order_amount|消費金額|Float||
 |goods_discount_price|單獨用在商品上的折購金額總和|Float||
 |order_discount_price|單獨用在訂單上的折購金額總和。從 OrdersCoupons 進行計算|Float||
