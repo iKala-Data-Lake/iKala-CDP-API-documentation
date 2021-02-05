@@ -70,18 +70,20 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 
 **⚠注意：第一列的欄位名稱，每一欄都不能省略，且欄位順序不能調換，但是在第二列以後的資料欄位，如果該資料沒該欄位，則該欄位留空**
 
+[check order CSV template](./order_CSV_template.csv)
+
 \* means required field
 
 |Name|Description|Type|Value Definition|
 |-|-|-|-|
 |order_id*|primary key|UniqueID|MUST be UTF-8 encoded|
 |user_id*||UniqueID|MUST be UTF-8 encoded|
-|create_timestamp|訂單建立時的時間戳記|Timestamp|https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#timestamp_type|
-|status|訂單狀態 <br> - 訂單成立 <br> - 請款 <br> - 扣款 <br> - 付清 <br> - 部分換貨 <br> - 換貨 <br> - 部分退貨 <br> - 部分退貨 <br> - 訂單取消|String|MUST be UTF-8 encoded { 訂單成立 \| 請款 \| 扣款 \| 付清 \|  部分換貨 \|  換貨 \|  部分退貨 \|  部分退貨 \|  訂單取消 } <br>**⚠注意：下一個版本開始會換成英文字串**|
-|order_amount|消費金額|Float||
-|goods_discount_price|單獨用在商品上的折購金額總和|Float||
-|order_discount_price|單獨用在訂單上的折購金額總和。從 OrdersCoupons 進行計算|Float||
-|payment_amount|結帳金額|Float||
+|create_timestamp*|訂單建立時的時間戳記| YYYY-MM-DD HH:MM[:SS[.SSSSSS]] |https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#timestamp_type|
+|status|交易狀態:<br>- 訂單成立 (order_confirmed)<br>- 請款 (billing)<br>- 扣款 (debit)<br>- 付清 (paid)<br>- 部分換貨 (partially_exchange)<br>- 換貨 (exchange)<br>- 部分退貨 (partially_return)<br>- 訂單取消 (order_cancelled)|String (一定要是英文並且完全符合)|MUST be UTF-8 encoded { order_confirmed \| billing \| debit \| paid \|  partially_exchange \|  exchange \|  partially_return \|  order_cancelled }|
+|order_amount| 消費金額(不填就預設 0) |Float (不做正負數檢查)||
+|goods_discount_price|單獨用在商品上的折購金額總和(不填就預設 0)|Float (不做正負數檢查)||
+|order_discount_price|單獨用在訂單上的折購金額總和。從 OrdersCoupons 進行計算(不填就預設 0)|Float (不做正負數檢查)||
+|payment_amount*|結帳金額|Float (不做正負數檢查)||
 |currency|假如非跨國企業，則用當地貨幣當預設|String|https://zh.wikipedia.org/wiki/ISO_4217|
-|installment|分幾期。不分期即是 0|Integer||
-|is_online|是否是線上訂單|Boolean||
+|installment|分幾期。不分期即是 0 (不填就預設 0)|Integer (一定要大於 0)||
+|is_online|是否是線上訂單 (不填就預設線下)|Boolean||
