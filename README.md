@@ -18,7 +18,7 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 
 在 expired_at（即創建時間加八小時）之前上傳CSV，不然 put_url 會失效，可以使用任何 HTTP client 上傳您的 CSV 並指定 Content-Type。下面是一個 curl 範例：
 
-`curl -X PUT -T file.csv UPLOAD_URL`
+`curl -X PUT -T file.csv -H "Content-Type: application/octet-stream" UPLOAD_URL`
 
 如果上傳成功，您將會收到 HTTP 200 response，在 x-goog-stored-content-length header 能知道檔案實際的byte數。
 
