@@ -10,7 +10,7 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |API|URL|Description|
 |-|-|-|
 | Create application token| POST `/v1/app/token`| 使用 client_id 與 client_secret 取得 token，夾帶在其他 API 的 header 中來通過認證|
-| Create data ingestion| POST `/v1/app/user_data/ingestions` |建立一個上傳任務，API的body有一個參數 type ，要填`user_profiles`或`tagging`來決定要上傳的資料類型，接著您必須自行完成上傳 CSV 的步驟，將檔案上傳到 `pur_url`|
+| Create data ingestion| POST `/v1/app/user_data/ingestions` |建立一個上傳任務，API的body有一個參數 type ，要填`user_profiles`或`tagging`來決定要上傳的資料類型，接著您必須自行完成上傳 CSV 的步驟，將檔案上傳到 `put_url`|
 | Notify that data is ready for process| POST `/v1/app/user_data/ingestions/{id}/data_ready`| 當 CSV 上傳完成後，使用此API主動通知伺服器將 CSV 檔案內容傳入 CDP|
 | Get details of data ingestion|GET `/v1/app/user_data/ingestions/{id}`| Ingestion 目前狀態與 meta data，status 值包含 `created`, `uploaded`, `validating`, `validated`, `processing`, `succeeded`, `failed`|
 
