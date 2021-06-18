@@ -47,7 +47,7 @@ API documentation: https://ikala-data-lake.github.io/iKala-CDP-API-documentation
 |-|-|-|
 |user_id*|primary key，需要與 GA 埋入的 user_id 一樣|unique-ID|
 |email*|電子郵件|String|
-|phone_number*|電話號碼 (+886912345678)|String ([E.164](https://en.wikipedia.org/wiki/E.164), 國碼加上電話號碼)|
+|phone_number|電話號碼 (+886912345678)|String ([E.164](https://en.wikipedia.org/wiki/E.164), 國碼加上電話號碼)|
 |gender| 性別<br> - 保留 (rather_not_say)<br> - 男 (male)<br> - 女 (female) |String { rather_not_say \| male \| female }|
 |status| 帳號狀態<br> - 未驗證 (pending_activation)<br> - 註冊 (active)<br> - 註銷 (deleted)<br> - 鎖定中 (disabled) |String { pending_activation \| active \| deleted \| disabled }|
 |register_timestamp|註冊時間|Timestamp(RFC3339)|
